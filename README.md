@@ -4,6 +4,8 @@
 
 **IAgentes** es una aplicación web sencilla que, mediante una interfaz tipo chat, permite tomar una solicitud específica, dividirla en subtareas, y enviar cada subtarea a un modelo de LLM (Large Language Model) diferente. Luego, se recopilan todas las respuestas como contexto para ofrecer una solución más completa que si se enviara a un solo modelo LLM. La aplicación fue desarrollada principalmente para probar las capacidades de **v0.dev** y en poco tiempo se obtuvo este resultado. Funciona con **Flask** y **Flask-SocketIO**, lo que permite la comunicación en tiempo real entre el cliente y los agentes. Estos agentes interactúan con diferentes APIs (Groq y OpenAI) para obtener respuestas precisas y unificarlas en una única respuesta final.
 
+[![Ver el video](https://img.youtube.com/vi/gpcyIe4PRf8/0.jpg)](https://youtu.be/gpcyIe4PRf8)
+
 ## Estructura del Proyecto
 
 El proyecto está organizado de la siguiente manera:
