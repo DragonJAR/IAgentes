@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>IAgentes - Multiagente de LLM para mejorar las respuestas</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='jquery-3.6.0.min.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Multiagente de LLM para mejorar las respuestas.">
+    <meta name="keywords" content="Flask, Python, IA, Groq, Gestión de Tareas">
+    <meta name="author" content="DragonJAR SAS">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="IAgentes - Multiagente de LLM para mejorar las respuestas">
+    <meta property="og:description" content="Multiagente de LLM para mejorar las respuestas.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ url_for('static', filename='IAgentes.png') }}">
+    <meta property="og:url" content="https://www.dragonjar.org">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="IAgentes - Multiagente de LLM para mejorar las respuestas">
+    <meta name="twitter:description" content="Utiliza agentes IA para dividir y resolver tareas complejas.">
+    <meta name="twitter:image" content="{{ url_for('static', filename='IAgentes.png') }}">
+</head>
+
+<body>
+    <div class="contenedor">
+        <header>
+            <picture>
+                <source srcset="{{ url_for('static', filename='IAgentes-small.png') }}" media="(max-width: 600px)">
+                <source srcset="{{ url_for('static', filename='IAgentes.png') }}">
+                <img src="{{ url_for('static', filename='IAgentes.png') }}" alt="Logo de IA Agentes" aria-label="Logo de IA Agentes">
+            </picture>
+            
+            <button id="toggle-menu" class="menu-toggle-btn">Agentes</button>
+        </header>
+
+        <div class="contenedor-chat" aria-live="polite">
+            <div class="chat">
+                <div id="mensajes" class="mensajes" aria-live="polite" aria-relevant="additions text"></div>
+                <div class="contenedor-entrada">
+                    <textarea id="mensaje" class="input-textarea" placeholder="Escribe tu solicitud aquí..." autofocus aria-label="Escribe tu solicitud aquí"></textarea>
+                    <button id="boton-enviar" aria-label="Enviar">Enviar</button>
+                </div>
+                <div id="progress-container" class="progress-container" aria-live="polite" aria-relevant="additions">
+                    <div id="progress-bar" class="progress-bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div id="debug-messages" class="debug-messages" aria-live="assertive"></div>
+            </div>
+
+            
+            <div class="contenedor-agentes" id="menu-agentes">
+                <h2>Listado de Agentes</h2>
+                <div id="agentes" role="list">
+                    {% for agente in agentes %}
+                    <div class="agente" role="listitem" id="agente-{{ agente.id }}" data-agente-id="{{ agente.id }}">
+                        <h3>{{ agente.descripcion }}</h3>
+                        <p id="estado-agente-{{ agente.id }}">Estado: {{ agente.estado }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="promptModal" class="modal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <span class="close" role="button" tabindex="0" aria-label="Cerrar">&times;</span>
+            <h2 id="modal-title">Editar Prompt</h2>
+            <textarea id="prompt-textarea" rows="10" class="modal-textarea" aria-label="Editar Prompt"></textarea>
+            <div class="modal-options">
+                <label for="llm-select">Seleccionar LLM:</label>
+                <select id="llm-select" aria-label="Seleccionar LLM">
+                    <option value="groq">Groq</option>
+                    <option value="openai">OpenAI</option>
+                </select>
+                <label for="modelo-select">Seleccionar Modelo:</label>
+                <select id="modelo-select" aria-label="Seleccionar Modelo"></select>
+            </div>
+            <div class="modal-buttons">
+                <button id="cancelar-prompt" aria-label="Cancelar edición del Prompt">Cancelar</button>
+                <button id="guardar-prompt" aria-label="Guardar cambios del Prompt">Guardar</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
