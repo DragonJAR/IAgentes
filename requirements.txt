@@ -1,0 +1,4 @@
+requests
+openai
+flask-socketio
+Flask
